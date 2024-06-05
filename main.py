@@ -18,7 +18,7 @@ def uf(engine):
         # print(response.text)
 
     for item in response.json()['serie']:
-        print(item)
+        # print(item)
         uf_dict = {}
         uf_dict['valor_uf'] = item['valor']
         # Convertir la cadena de fecha y hora a objeto datetime
@@ -30,12 +30,20 @@ def uf(engine):
 
         # print(list_data)
     df_uf = pd.DataFrame(list_data)
+    # print(df_uf)
     df_uf.to_sql('api_indicadores_uf', engine,  schema='public', if_exists='replace'
                  , index=False, chunksize=10000)
+    
+    print("Permisos de tabla SQL")
+    
+    access_1 = f'GRANT SELECT ON TABLE public.api_indicadores_uf TO eit;'
+    with engine.begin() as con:
+        con.execute(sqlalchemy.text(access_1))
+        con.commit()
     print("Fin carga: uf")
 
 
 if __name__ == '__main__':
-    engine = sqlalchemy.create_engine('postgresql+psycopg2://postgres:clave123@localhost:5432/indicadores')
+    engine = sqlalchemy.create_engine('postgresql+psycopg2://postgres:Biwiser2024@localhost:5432/indicadores')
  
     uf(engine)
