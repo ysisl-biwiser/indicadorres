@@ -36,6 +36,6 @@ def uf(engine):
 
 
 if __name__ == '__main__':
-    engine = sqlalchemy.create_engine('postgresql+psycopg2://postgres:Biwiser2024@localhost:5432/indicadores')
+    engine = sqlalchemy.create_engine('postgresql+psycopg2://postgres:clave123@localhost:5432/indicadores')
  
     uf(engine)
